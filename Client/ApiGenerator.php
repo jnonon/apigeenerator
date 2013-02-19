@@ -149,17 +149,34 @@ class ApiGenerator
         $this->clean();
 
         foreach ($endPoint['resources'] as $resource) {
-            //$requiredVarsInRequest = $this->parseString($resource['path']);
+
+            //TODO: Thinking on making an ApiMethod object.
             $methodDetail = $resource['method'];
-            $methodName = $this->snakeToCamel($methodDetail['id']);
+            /*
+            $methodName = self::stringToCamel($methodDetail['id']);
 
+            $docDescription = (isset($methodDetail['doc']['content']) ?
+                               html_entity_decode($methodDetail['doc']['content']) :
+                               'FIXME: No Description');
 
-            $this->methods[$methodName]['documentation']['description'] = html_entity_decode($methodDetail['doc']['content']);
-            $this->methods[$methodName]['documentation']['reference'] = $methodDetail['doc']['apigee:url'];
-            $this->methods[$methodName]['params'] = $methodDetail['params'];
+            $docReference = (isset($methodDetail['doc']['apigee:url']) ?
+                             html_entity_decode($methodDetail['doc']['apigee:url']) :
+                             '');
 
-            $this->buildParameterPriority($methodDetail['params']);
+            $params = (isset($methodDetail['params']) ? $methodDetail['params'] : array());
 
+            $this->methods[$methodName]['documentation']['reference'] = $docReference;
+            $this->methods[$methodName]['documentation']['description'] = $docDescription;
+            $this->methods[$methodName]['params'] = $params;
+
+            */
+
+            $method = new ApiMethod($methodDetail);
+
+            $this->methods[$method->getName()] = $method;
+            $parameters = $method->getParameters();
+
+            $this->buildParameterPriority($parameters);
             $this->totalMethods++;
 
         }
@@ -182,19 +199,20 @@ class ApiGenerator
 
         foreach ($this->methods as $methodName => $methodDetail) {
 
-            foreach ($methodDetail['params'] as $key => $parameter) {
-                $propertyName = $parameter['name'];
+            foreach ($methodDetail->getParameters() as $key => $parameter) {
+                $parameterName = $parameter->getName();
 
-                if ($this->isProperty($propertyName)) {
+                if ($this->isProperty($parameterName)) {
 
                     //Works under the asumption that same parameter names have the same description
-                    if (!isset($this->properties[$propertyName])) {
+                    if (!isset($this->properties[$parameterName])) {
 
-                        $this->properties[$propertyName] = $methodDetail['params'][$key];
+                        $this->properties[$parameterName] = $parameter;
                     }
-
                     //Removes from current method
-                    unset($this->methods[$methodName]['params'][$key]);
+                    $methodDetail->removeParameter($parameterName);
+
+                    //unset($this->methods[$methodName]['params'][$key]);
 
                 }
             }
@@ -207,19 +225,22 @@ class ApiGenerator
     /**
      * Builds an importance array with method parameters repeated across the API
      *
-     * @param array $parameters
+     * @param array $parameters collection
      */
     private function buildParameterPriority($parameters)
     {
+
+
         foreach ($parameters as $parameter) {
+            $parameterName = $parameter->getName();
 
-            if (isset($this->parametersImportance[$parameter['name']])) {
+            if (isset($this->parametersImportance[$parameterName])) {
 
-                $this->parametersImportance[$parameter['name']] += 1;
+                $this->parametersImportance[$parameterName] += 1;
 
             } else {
 
-                $this->parametersImportance[$parameter['name']] = 1;
+                $this->parametersImportance[$parameterName] = 1;
 
             }
         }
@@ -282,13 +303,18 @@ class ApiGenerator
      * Convert from snake format to camel case
      * See http://www.refreshinglyblue.com/2009/03/20/php-snake-case-to-camel-case/
      *
-     * @param string $string String with snake style
+     * @param string  $string               String to be converted into camel case
+     * @param boolean $$capitalizeFirstWord Capitalizes first word by default
      *
      * @return string
      */
-    private function snakeToCamel($string)
+    public static function stringToCamel($string, $capitalizeFirstWord = true)
     {
-        $val = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
+        $val = str_replace(' ', '', ucwords(preg_replace('/[_-]/', ' ', $string)));
+
+        if (!$capitalizeFirstWord) {
+            $val = strtolower($val{0}).substr($val, 1);
+        }
 
         return $val;
     }
