@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit colors="true" bootstrap="./Tests/bootstrap.php">
+
+    <testsuites>
+        <testsuite name="Open Calais Bundle Test Suite">
+            <directory suffix="Test.php">./Tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>./Client</directory>
+        </whitelist>
+    </filter>
+    
+    <logging>
+      <log type="coverage-html" target="coverage-report" charset="UTF-8"
+           yui="true" highlight="false"
+           lowUpperBound="50" highLowerBound="95"/>
+    </logging>    
+
+</phpunit>
