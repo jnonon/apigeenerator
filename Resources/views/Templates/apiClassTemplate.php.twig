@@ -31,7 +31,8 @@ class {{ apiName }}
 
 {% for name,property in properties %}
     /**
-     * @var ${{ property.name  }}
+     * {{ property.description  }}
+     * @var {{ property.type  }} ${{ property.name  }}
      */
     ${{ name }};
 
@@ -44,22 +45,21 @@ class {{ apiName }}
     {
 
 {% for name,property in properties %}
-    $this->{{ name }} = ${{ name }};
+        $this->{{ name }} = ${{ name }};
 {% endfor %}
 
     }
 
 
-
 {% for name,method in methods %}
     /**
-     * {{ method.documentation.description|raw }}
-     * {{ method.documentation.reference|raw }}
-{% for param in method.params%}
-     * @param {{ param.type }} ${{ param.name }} {{ param.name }}
+     * {{ method.description|raw }}
+     * {{ method.reference|raw }}
+{% for param in method.parameters%}
+     * @param {{ param.type }} ${{ param.name }} {{ param.description }}
 {% endfor %}
      */
-    public function get{{ name }}({% for param in method.params %}${{ param.name }}{% if not loop.last %}, {% endif %}{% endfor %})
+    public function get{{ name }}({% for param in method.parameters %}${{ param.name }}{% if not loop.last %}, {% endif %}{% endfor %})
     {
         //Stub
     }

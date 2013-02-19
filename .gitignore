@@ -1,3 +1,5 @@
 vendor
 coverage-report
 .project
+.buildpath
+.settings/
