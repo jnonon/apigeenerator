@@ -6,20 +6,16 @@ use Jnonon\Tools\Apigee\Client\ApiGenerator;
 
 class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 {
+    protected $apiName = 'TraktApi';
 
     public function testPropertyImportance()
     {
 
-        $apigee = new ApiGenerator('TraktApi');
+        $apigee = new ApiGenerator($this->apiName);
 
-        //$apigee->setApigeeSourceUrl($url);
+        $this->assertEquals($apigee->getApiName(), $this->apiName);
 
-        //$endpoints = $apigee->getEndpoints();
-        //
-        //var_export($endpoints[0]); die();
-
-        //$class = $apigee->generateClassForEndpoint($endpoints[0]);
-        //Enpoint should be an object :-/
+        //End point fixture
         $endpoint = array('resources' =>
                        array(
                            array('method' =>
@@ -53,6 +49,9 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
 
         $apiInfo = $apigee->getInformationfromEndpoint($endpoint);
+        $parameterImportance = $apigee->getParametersImportance();
+
+        $this->assertTrue(count($parameterImportance) == 3);
 
         $relevant = $apigee->getImportance('important');
         $notRelevant = $apigee->getImportance('notImportant');
@@ -62,9 +61,51 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
     }
 
+
+
+
+
+    /**
+     * Tests for invalid APIs urls
+     * @expectedException Exception
+     */
+    public function testInvalidUrl()
+    {
+
+        $url = 'https://apigee.com/v1/consoles/IdoNotExist/apidescription?format=internal';
+
+        $apigee = new ApiGenerator('DoNotExistsAPI');
+
+        $apigee->setApigeeSourceUrl($url);
+
+        $endpoints = $apigee->getEndpoints();
+
+    }
+
+
+
+    /**
+     * Tests for empty endpoints
+     */
+    public function testEmptyEndpoints()
+    {
+        $url = 'https://apigee.com/v1/consoles/IdoNotExist/apidescription?format=internal';
+
+        $apigee = new ApiGenerator('DoNotExistsAPI');
+
+        $apiInfo = $apigee->getInformationfromEndpoint(array('resources' => array()));
+
+        $this->assertTrue(is_array($apiInfo));
+        $this->assertTrue(empty($apiInfo[0]));
+        $this->assertTrue(empty($apiInfo[1]));
+
+
+    }
+
+
     /**
      * Tests for description of an API
-     *
+     */
     public function testGetApiDescription()
     {
         //$url = 'https://apigee.com/v1/consoles/reddit/apidescription?format=internal';
@@ -79,10 +120,7 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
         $class = $apigee->generateClassForEndpoint($endpoints[0]);
 
-        echo $class;
-
-
     }
-*/
+
 
 }

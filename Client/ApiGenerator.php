@@ -281,24 +281,6 @@ class ApiGenerator
         return ($variableTotalAperance +$k)/($totalAmountOfMethods + $k*$totalVariableCases);
 
     }
-
-    /**
-     * Parses an string, looks for strings inside a {}
-     *
-     * @param string $string String
-     *
-     * @return array
-     */
-    private function parseString($string)
-    {
-
-        if (preg_match_all('/{([\w\d]+)}/U', $string, $matches)) {
-
-            return $matches;
-        }
-
-        return array();
-    }
     /**
      * Convert from snake format to camel case
      * See http://www.refreshinglyblue.com/2009/03/20/php-snake-case-to-camel-case/
