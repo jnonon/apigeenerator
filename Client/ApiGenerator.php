@@ -257,7 +257,7 @@ class ApiGenerator
     private function isProperty($paramName)
     {
 
-        $importanceThreshold = 0.45;
+        $importanceThreshold = 0.60;
 
         return  ($this->getImportance($paramName) > $importanceThreshold);
     }

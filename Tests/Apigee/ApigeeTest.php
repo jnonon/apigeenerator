@@ -10,26 +10,66 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
     public function testPropertyImportance()
     {
 
-        $url = 'https://apigee.com/v1/consoles/morbo/apidescription?format=internal';
-
         $apigee = new ApiGenerator('TraktApi');
 
-        $apigee->setApigeeSourceUrl($url);
+        //$apigee->setApigeeSourceUrl($url);
 
-        $endpoints = $apigee->getEndpoints();
+        //$endpoints = $apigee->getEndpoints();
+        //
+        //var_export($endpoints[0]); die();
 
-        $apiInfo = $apigee->getInformationfromEndpoint($endpoints[0]);
-        $paramertersImportance = $apigee->getParametersImportance();
+        //$class = $apigee->generateClassForEndpoint($endpoints[0]);
+        //Enpoint should be an object :-/
+        $endpoint = array('resources' =>
+                       array(
+                           array('method' =>
+                               array (
+                                      'id' => 'important-method',
+                                      'doc' => array (
+                                                  'content' => 'This is an important parameter',
+                                                  'title' => '',
+                                                  'apigee:url' => 'http://test.com/test',
+                                               ),
+                                       'params' => array (array ('name' => 'important', 'type' => 'string'),
+                                                           array ('name' => 'not-important', 'type' => 'string')
+                                                          )
+                                       )
+                               ),
+                           array('method' =>
+                               array (
+                                      'id' => 'not-important-method',
+                                      'doc' => array (
+                                                  'content' => 'This is an important parameter',
+                                                  'title' => '',
+                                                  'apigee:url' => 'http://test.com/test',
+                                               ),
+                                       'params' => array (array ('name' => 'important', 'type' => 'string'),
+                                                           array ('name' => 'not-important2', 'type' => 'string')
+                                                          )
+                                       )
+                               )
+                           )
+                );
 
+
+        $apiInfo = $apigee->getInformationfromEndpoint($endpoint);
+
+        $relevant = $apigee->getImportance('important');
+        $notRelevant = $apigee->getImportance('notImportant');
+        //2/3
+        $this->assertTrue($relevant > 0.66, "Parameter importance is less than expected: ".$relevant);
+        $this->assertTrue( $notRelevant < 0.66, "Parameter importance is bigger than expected: ".$notRelevant);
 
     }
 
     /**
      * Tests for description of an API
-     */
+     *
     public function testGetApiDescription()
     {
-        $url = 'https://apigee.com/v1/consoles/reddit/apidescription?format=internal';
+        //$url = 'https://apigee.com/v1/consoles/reddit/apidescription?format=internal';
+
+        $url = 'https://apigee.com/v1/consoles/morbo/apidescription?format=internal';
 
         $apigee = new ApiGenerator('RedditApi');
 
@@ -43,10 +83,6 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
 
     }
-
-
-
-
-
+*/
 
 }

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -18,14 +17,12 @@
  *
  */
 
-namespace {{ "apiGenerator.namespace" }};
-{#}
+namespace {{ namespace|default('Define\\A\\PSR0\\Namespace') }};
 /**
- * {{ apiGenerator.description }}
- * @author {{ apiGenerator.author.name }} {{ apiGenerator.author.email }}
+ * FIXME: Add Description
+ * @author Author <author@github.com>
  *
  */
- #}
 class {{ apiName }}
 {
 
@@ -40,6 +37,11 @@ class {{ apiName }}
 
 
     /**
+     * Constructor
+     *
+{% for name,property in properties %}
+     * @param {{ property.type }} ${{ property.name }} {{ property.description }}
+{% endfor %}
      */
     public function __construct({% for name,property in properties %}${{ name }}{% if not loop.last %}, {% endif %}{% endfor %})
     {
@@ -55,6 +57,7 @@ class {{ apiName }}
     /**
      * {{ method.description|raw }}
      * {{ method.reference|raw }}
+     *
 {% for param in method.parameters%}
      * @param {{ param.type }} ${{ param.name }} {{ param.description }}
 {% endfor %}
