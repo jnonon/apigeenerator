@@ -6,8 +6,6 @@ This tool generates Stub classes base on existing definitions in Apigee website 
 
 ### Installing via Composer
 
-The recommended way to install Guzzle is through [Composer](http://getcomposer.org).
-
 1. Add ``jnonon/apigee`` as a dependency in your project's ``composer.json`` file:
 
         {
