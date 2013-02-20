@@ -22,7 +22,6 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
                                array (
                                       'id' => 'important-method',
                                       'doc' => array (
-                                                  'content' => 'This is an important parameter',
                                                   'title' => '',
                                                   'apigee:url' => 'http://test.com/test',
                                                ),
@@ -50,6 +49,10 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
         $apiInfo = $apigee->getInformationfromEndpoint($endpoint);
         $parameterImportance = $apigee->getParametersImportance();
+
+        $method = $apigee->getMethod(ApiGenerator::stringToCamel('not-important-method'));
+
+        $this->assertInstanceOf('Jnonon\\Tools\\Apigee\\Client\\ApiMethod', $method);
 
         $this->assertTrue(count($parameterImportance) == 3);
 
@@ -89,7 +92,7 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmptyEndpoints()
     {
-        $url = 'https://apigee.com/v1/consoles/IdoNotExist/apidescription?format=internal';
+        //$url = 'https://apigee.com/v1/consoles/IdoNotExist/apidescription?format=internal';
 
         $apigee = new ApiGenerator('DoNotExistsAPI');
 

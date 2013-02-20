@@ -38,7 +38,7 @@ class ApiMethod
      *
      * @var string
      */
-    private $description;
+    private $description = 'FIXME: No Description';
 
     /**
      * Method reference
@@ -56,9 +56,7 @@ class ApiMethod
 
         $this->name = ApiGenerator::stringToCamel($methodDetail['id']);
 
-        $this->description = (isset($methodDetail['doc']['content']) ?
-                              html_entity_decode($methodDetail['doc']['content']) :
-                              'FIXME: No Description');
+        $this->setDescription($methodDetail);
 
         $this->reference= (isset($methodDetail['doc']['apigee:url']) ?
                           html_entity_decode($methodDetail['doc']['apigee:url']) : '');
@@ -66,14 +64,18 @@ class ApiMethod
         $parameters = (isset($methodDetail['params']) && is_array($methodDetail['params']) ? $methodDetail['params'] : array());
 
         $this->setParameters($parameters);
-        /*
-        $this->methods[$methodName]['documentation']['reference'] = $docReference;
-        $this->methods[$methodName]['documentation']['description'] = $docDescription;
-        $this->methods[$methodName]['params'] = $params;
-        */
 
 
     }
+
+    private function setDescription(array $methodDetail)
+    {
+        if (isset($methodDetail['doc']['content'])) {
+            $this->description  = html_entity_decode($methodDetail['doc']['content']);
+        }
+
+    }
+
     /**
      * Set method parameters
      *

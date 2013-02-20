@@ -60,15 +60,6 @@ class ApiParameter
     }
 
     /**
-     * Gets parameter order of apperance
-     * @return integer
-     */
-    public function getOrder()
-    {
-        return $this->order;
-    }
-
-    /**
      * Gets Name
      * @return string
      */

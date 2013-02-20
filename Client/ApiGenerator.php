@@ -102,15 +102,18 @@ class ApiGenerator
      */
     private  function getApiDescription()
     {
+        try {
+            //Guzzle may be an over kill for this
+            $descriptionString = file_get_contents($this->apigeeSourceUrl);
 
-        $descriptionString = file_get_contents($this->apigeeSourceUrl);
-        $apiDescription = json_decode($descriptionString, true); //as an array
+            $apiDescription = json_decode($descriptionString, true); //as an array
 
-        if (!is_array($apiDescription)) {
+            return $apiDescription;
+
+        } catch (\Exception $error) {
+
             throw new \Exception('Invalid Json Object');
         }
-
-        return $apiDescription;
     }
 
     /**
@@ -150,26 +153,7 @@ class ApiGenerator
 
         foreach ($endPoint['resources'] as $resource) {
 
-            //TODO: Thinking on making an ApiMethod object.
             $methodDetail = $resource['method'];
-            /*
-            $methodName = self::stringToCamel($methodDetail['id']);
-
-            $docDescription = (isset($methodDetail['doc']['content']) ?
-                               html_entity_decode($methodDetail['doc']['content']) :
-                               'FIXME: No Description');
-
-            $docReference = (isset($methodDetail['doc']['apigee:url']) ?
-                             html_entity_decode($methodDetail['doc']['apigee:url']) :
-                             '');
-
-            $params = (isset($methodDetail['params']) ? $methodDetail['params'] : array());
-
-            $this->methods[$methodName]['documentation']['reference'] = $docReference;
-            $this->methods[$methodName]['documentation']['description'] = $docDescription;
-            $this->methods[$methodName]['params'] = $params;
-
-            */
 
             $method = new ApiMethod($methodDetail);
 
@@ -183,6 +167,17 @@ class ApiGenerator
 
 
         return $this->methods;
+    }
+    /**
+     * Gets a method from current endpoint
+     *
+     * @param string $methodName Method name
+     *
+     * @return ApiMethod
+     */
+    public function getMethod($methodName)
+    {
+        return (isset($this->methods[$methodName])) ? $this->methods[$methodName] : null;
     }
     /**
      * Extracts properties from methods
