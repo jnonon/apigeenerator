@@ -66,6 +66,13 @@ class ApiGenerator
 
     protected $properties = array();
 
+    /**
+     * Generated class string
+     *
+     * @var string
+     */
+    protected $stubClass = '';
+
 
     /**
      * Constructor
@@ -139,6 +146,7 @@ class ApiGenerator
         $this->methods = array();
         $this->properties = array();
         $this->parametersImportance = array();
+        $this->stubClass = '';
 
     }
     /**
@@ -328,12 +336,41 @@ class ApiGenerator
 
         $loader = new Twig_Loader_Filesystem(__DIR__.'/../Resources/views/Templates');
 
-
         $twig = new \Twig_Environment($loader);
 
-        return $twig->render($this->template, array('apiName' => $this->apiName,
+        $this->stubClass = $twig->render($this->template, array('apiName' => $this->apiName,
                                                     'methods' => $methods,
                                                     'properties' => $properties));
+
+        return $this;
+
+    }
+    /**
+     * Writes to a file
+     *
+     * @param string  $path     File Path
+     * @param boolean $override Override if exists
+     * @throws Exception
+     * @return boolean
+     */
+    public function write($path, $override = false)
+    {
+
+        if ($this->stubClass == '') {
+            throw new \Exception('Must call generateClassForEndpoint first');
+        }
+
+        $fileName = $this->apiName.'.php';
+
+        $filePath = $path.DIRECTORY_SEPARATOR.$fileName;
+
+        if ($override == false && file_exists($filePath)) {
+            throw new \Exception("File $path already exists. If you want to override, set override = true");
+        }
+
+        $file = new \SplFileObject($filePath, 'w+');
+
+        return ($file->fwrite($this->stubClass) !== null);
 
     }
 

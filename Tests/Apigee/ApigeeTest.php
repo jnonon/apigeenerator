@@ -8,15 +8,7 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 {
     protected $apiName = 'TraktApi';
 
-    public function testPropertyImportance()
-    {
-
-        $apigee = new ApiGenerator($this->apiName);
-
-        $this->assertEquals($apigee->getApiName(), $this->apiName);
-
-        //End point fixture
-        $endpoint = array('resources' =>
+    protected $endpoint = array('resources' =>
                        array(
                            array('method' =>
                                array (
@@ -46,8 +38,18 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
                            )
                 );
 
+    public function testPropertyImportance()
+    {
 
-        $apiInfo = $apigee->getInformationfromEndpoint($endpoint);
+        $apigee = new ApiGenerator($this->apiName);
+
+        $this->assertEquals($apigee->getApiName(), $this->apiName);
+
+        //End point fixture
+
+
+
+        $apiInfo = $apigee->getInformationfromEndpoint($this->endpoint);
         $parameterImportance = $apigee->getParametersImportance();
 
         $method = $apigee->getMethod(ApiGenerator::stringToCamel('not-important-method'));
@@ -64,7 +66,20 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Tests when try to write to a path when file already exists
+     * @expectedException Exception
+     */
+    public function testWriteBeforeGenerates()
+    {
 
+        $url = 'https://apigee.com/v1/consoles/IdoNotExist/apidescription?format=internal';
+
+        $apigee = new ApiGenerator('DoNotExistsAPI');
+
+        $apigee->write('.');
+
+    }
 
 
 
@@ -85,6 +100,19 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Tests for existing file
+     * @expectedException Exception
+     */
+    public function testOveridingExistingFile()
+    {
+
+        $apigee = new ApiGenerator('DoNotExistsAPI');
+
+        $apigee->generateClassForEndpoint($this->endpoint)->write(sys_get_temp_dir(), true);
+        $apigee->generateClassForEndpoint($this->endpoint)->write(sys_get_temp_dir(), false);
+
+    }
 
 
     /**
@@ -105,7 +133,6 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
     }
 
-
     /**
      * Tests for description of an API
      */
@@ -121,9 +148,8 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
         $endpoints = $apigee->getEndpoints();
 
-        $class = $apigee->generateClassForEndpoint($endpoints[0]);
+        $apigee->generateClassForEndpoint($endpoints[0])->write(sys_get_temp_dir(), true);
 
     }
-
 
 }
