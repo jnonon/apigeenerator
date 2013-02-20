@@ -1,18 +1,14 @@
 <?php
 /**
- *
- */
-
-/**
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
  * @author Jonathan Nonon <jnonon@gmail.com>
  *
  **/
-use Jnonon\Tools\Apigee\Client\ApiParameter;
-
 namespace Jnonon\Tools\Apigee\Client;
+
+use Jnonon\Tools\Apigee\Client\ApiParameter;
 /**
  * Defines a method
  *

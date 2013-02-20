@@ -72,6 +72,19 @@ class ApiGenerator
      * @var string
      */
     protected $stubClass = '';
+    /**
+     * Namespace
+     *
+     * @var string
+     */
+    protected $namespace;
+
+    /**
+     * Base url for current endpoint
+     *
+     * @var string
+     */
+    protected $baseUrl = '';
 
 
     /**
@@ -101,6 +114,17 @@ class ApiGenerator
     {
         return $this->apiName;
     }
+
+    /**
+     * Sets a namespace
+     * @param string $namespace
+     */
+    public function setNamespace($namespace)
+    {
+        $this->namespace = $namespace;
+    }
+
+
 
     /**
      * Gets API Desctiption
@@ -147,6 +171,7 @@ class ApiGenerator
         $this->properties = array();
         $this->parametersImportance = array();
         $this->stubClass = '';
+        $this->baseUrl = '';
 
     }
     /**
@@ -156,6 +181,9 @@ class ApiGenerator
      */
     private function extractMethods(array $endPoint)
     {
+        if (!isset($endPoint['base'])) {
+            throw new \Exception('Api definition expects to have an base url');
+        }
 
         $this->clean();
 
@@ -173,6 +201,7 @@ class ApiGenerator
 
         }
 
+        $this->baseUrl = $endPoint['base'];
 
         return $this->methods;
     }
@@ -308,14 +337,25 @@ class ApiGenerator
      * Gets methods and properties from an endpoint
      *
      * @param array $endpoint Endpoint
-     * @return array:
+     * @return ApiClass
      */
     public function getInformationfromEndpoint($endpoint)
     {
+
         $this->extractMethods($endpoint);
         $this->extractPropertiesFromMethods();
 
-        return array($this->methods, $this->properties);
+        $apiClass = new ApiClass();
+
+        $apiClass->setBaseUrl($this->baseUrl);
+        $apiClass->setProperties($this->properties);
+        $apiClass->setMethods($this->methods);
+        $apiClass->setBaseUrl($this->baseUrl);
+        $apiClass->setClassName($this->apiName);
+        $apiClass->setNamespace($this->namespace);
+
+
+        return $apiClass;
 
     }
 
@@ -332,15 +372,13 @@ class ApiGenerator
     public function generateClassForEndpoint($endpoint)
     {
 
-        list($methods, $properties) = $this->getInformationfromEndpoint($endpoint);
+        $apiClass = $this->getInformationfromEndpoint($endpoint);
 
         $loader = new Twig_Loader_Filesystem(__DIR__.'/../Resources/views/Templates');
 
         $twig = new \Twig_Environment($loader);
 
-        $this->stubClass = $twig->render($this->template, array('apiName' => $this->apiName,
-                                                    'methods' => $methods,
-                                                    'properties' => $properties));
+        $this->stubClass = $twig->render($this->template, array('apiClass' => $apiClass));
 
         return $this;
 
@@ -351,7 +389,7 @@ class ApiGenerator
      * @param string  $path     File Path
      * @param boolean $override Override if exists
      * @throws Exception
-     * @return boolean
+     * @return mixed string or false
      */
     public function write($path, $override = false)
     {
@@ -370,7 +408,13 @@ class ApiGenerator
 
         $file = new \SplFileObject($filePath, 'w+');
 
-        return ($file->fwrite($this->stubClass) !== null);
+        // @codeCoverageIgnoreStart
+        if ($file->fwrite($this->stubClass) === null) {
+            throw new \Exception("Could not write file in $path, verify you have writing permission");
+        }
+        // @codeCoverageIgnoreEnd
+
+        return $filePath;
 
     }
 

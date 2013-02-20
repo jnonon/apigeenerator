@@ -35,9 +35,12 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
                                                           )
                                        )
                                )
-                           )
-                );
-
+                           ),
+                          'base' => 'this.url.base/'
+                   );
+    /**
+     * Tests property importance desition
+     */
     public function testPropertyImportance()
     {
 
@@ -116,22 +119,56 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
 
     /**
+     * Tests for non writable path
+     * @expectedException Exception
+     */
+    public function testWritingToNonWritablePath()
+    {
+
+        $apigee = new ApiGenerator('DoNotExistsAPI');
+
+        $apigee->generateClassForEndpoint($this->endpoint)->write('/home', false);
+
+    }
+
+    /**
+     * Tests for undefined base url
+     * @expectedException Exception
+     */
+    public function testEndpointWithoutBaseurl()
+    {
+
+        $apigee = new ApiGenerator('DoNotExistsAPI');
+        $apiInfo = $apigee->getInformationfromEndpoint(array('resources' => array()));
+
+    }
+
+    /**
      * Tests for empty endpoints
      */
     public function testEmptyEndpoints()
     {
-        //$url = 'https://apigee.com/v1/consoles/IdoNotExist/apidescription?format=internal';
+        $className = 'DoNotExistsAPI';
+        $baseUrl = 'http:\\\\base.url.com';
+        $namespace = "This\Is\A\NameSpace";
 
-        $apigee = new ApiGenerator('DoNotExistsAPI');
+        $apigee = new ApiGenerator($className);
+        $apigee->setNamespace($namespace);
 
-        $apiInfo = $apigee->getInformationfromEndpoint(array('resources' => array()));
+        $apiInfo = $apigee->getInformationfromEndpoint(array('resources' => array(), 'base' => $baseUrl));
 
-        $this->assertTrue(is_array($apiInfo));
-        $this->assertTrue(empty($apiInfo[0]));
-        $this->assertTrue(empty($apiInfo[1]));
+        $methods = $apiInfo->getMethods();
+        $properties = $apiInfo->getProperties();
 
+        $this->assertTrue(empty($methods), 'Methods are not empty');
+        $this->assertTrue(empty($properties), 'Properties are not empty');
+        $this->assertEquals($apiInfo->getBaseUrl(), $baseUrl);
+        $this->assertEquals($apiInfo->getClassName(), $className);
+        $this->assertEquals($apiInfo->getNamespace(), $namespace);
 
     }
+
+
 
     /**
      * Tests for description of an API

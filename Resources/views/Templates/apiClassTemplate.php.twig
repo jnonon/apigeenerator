@@ -17,16 +17,20 @@
  *
  */
 
-namespace {{ namespace|default('ADD\\A\\PSR0\\NamespaceReference') }};
+namespace {{ apiClass.namespace }};
 /**
  * FIXME: Add Description
  * @author Author <author@github.com>
  *
  */
-class {{ apiName }}
+class {{ apiClass.apiName }}
 {
-
-{% for name,property in properties %}
+    /**
+     * Api base Url
+     * @var string
+     */
+     protected $baseUrl = {{ apiClass.baseUrl }}
+{% for name,property in apiClass.properties %}
     /**
      * {{ property.description  }}
      * @var {{ property.type  }} ${{ property.name  }}
@@ -39,21 +43,20 @@ class {{ apiName }}
     /**
      * Constructor
      *
-{% for name,property in properties %}
+{% for name,property in apiClass.properties %}
      * @param {{ property.type }} ${{ property.name }} {{ property.description }}
 {% endfor %}
      */
-    public function __construct({% for name,property in properties %}${{ name }}{% if not loop.last %}, {% endif %}{% endfor %})
+    public function __construct({% for name,property in apiClass.properties %}${{ name }}{% if not loop.last %}, {% endif %}{% endfor %})
     {
 
-{% for name,property in properties %}
+{% for name,property in apiClass.properties %}
         $this->{{ name }} = ${{ name }};
 {% endfor %}
 
     }
 
-
-{% for name,method in methods %}
+{% for name,method in apiClass.methods %}
     /**
      * {{ method.description|raw }}
      * {{ method.reference|raw }}
@@ -64,7 +67,7 @@ class {{ apiName }}
      */
     public function get{{ name }}({% for param in method.parameters %}${{ param.name }}{% if not loop.last %}, {% endif %}{% endfor %})
     {
-        //Stub
+        //TODO: Auto-generated method stub
     }
 
 {% endfor %}
