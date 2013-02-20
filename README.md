@@ -5,6 +5,8 @@ Apigee gives you a complete API platform for the app economy.
 This tool generates Stub classes base on existing definitions in Apigee website for existing Api 
 
 ### Installing via Composer
+0. Clone this repository:
+        git clone git@github.com:jnonon/apigee.git
 
 1. Download and install Composer:
 
