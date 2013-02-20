@@ -29,7 +29,7 @@ class {{ apiClass.apiName }}
      * Api base Url
      * @var string
      */
-     protected $baseUrl = {{ apiClass.baseUrl }}
+     protected $baseUrl = "{{ apiClass.baseUrl }}";
 {% for name,property in apiClass.properties %}
     /**
      * {{ property.description  }}

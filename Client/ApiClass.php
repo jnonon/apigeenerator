@@ -132,7 +132,9 @@ class ApiClass
      */
     public function setNamespace($namespace)
     {
-        $this->namespace = $namespace;
+        if ($namespace != '') {
+            $this->namespace = $namespace;
+        }
     }
 
 }

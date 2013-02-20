@@ -417,5 +417,21 @@ class ApiGenerator
         return $filePath;
 
     }
+    /**
+     * Returns a string representation of the stub class
+     *
+     * @throws \Exception
+     * @return string
+     */
+    public function toString()
+    {
+
+        if ($this->stubClass == '') {
+            throw new \Exception('Must call generateClassForEndpoint first');
+        }
+
+        return $this->stubClass;
+
+    }
 
 }

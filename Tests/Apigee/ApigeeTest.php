@@ -82,6 +82,18 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Tests when try to return a generated class without data
+     * @expectedException Exception
+     */
+    public function testToStringBeforeGenerates()
+    {
+
+        $apigee = new ApiGenerator('DoNotExistsAPI');
+
+        $apigee->toString('.');
+
+    }
 
 
     /**
@@ -97,10 +109,7 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
         $apigee->setApigeeSourceUrl($url);
 
-        $endpoints = $apigee->getEndpoints();
-
-        //Will never get here
-        unset($endpoints);
+        $apigee->getEndpoints();
 
     }
 
@@ -169,8 +178,6 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
     }
 
-
-
     /**
      * Tests for description of an API
      */
@@ -184,7 +191,16 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
         $endpoints = $apigee->getEndpoints();
 
-        $apigee->generateClassForEndpoint($endpoints[0])->write(sys_get_temp_dir(), true);
+        $path = $apigee->generateClassForEndpoint($endpoints[0])->write(sys_get_temp_dir(), true);
+
+        //File is created
+        $this->assertTrue(file_exists($path));
+
+        //Test that an string can be returned
+        $this->assertTrue(is_string($apigee->toString()));
+
+
+
 
     }
 
