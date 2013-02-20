@@ -50,8 +50,6 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
         //End point fixture
 
-
-
         $apigee->getInformationfromEndpoint($this->endpoint);
         $parameterImportance = $apigee->getParametersImportance();
 
@@ -95,7 +93,6 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
     }
 
-
     /**
      * Tests for invalid APIs urls
      * @expectedException Exception
@@ -126,7 +123,6 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
         $apigee->generateClassForEndpoint($this->endpoint)->write(sys_get_temp_dir(), false);
 
     }
-
 
     /**
      * Tests for non writable path
@@ -198,9 +194,6 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
         //Test that an string can be returned
         $this->assertTrue(is_string($apigee->toString()));
-
-
-
 
     }
 

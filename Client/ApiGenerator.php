@@ -86,7 +86,6 @@ class ApiGenerator
      */
     protected $baseUrl = '';
 
-
     /**
      * Constructor
      *
@@ -124,14 +123,12 @@ class ApiGenerator
         $this->namespace = $namespace;
     }
 
-
-
     /**
      * Gets API Desctiption
      *
      * @return array
      */
-    private  function getApiDescription()
+    private function getApiDescription()
     {
         try {
             //Guzzle may be an over kill for this
@@ -262,7 +259,6 @@ class ApiGenerator
     private function buildParameterPriority($parameters)
     {
 
-
         foreach ($parameters as $parameter) {
             $parameterName = $parameter->getName();
 
@@ -336,7 +332,7 @@ class ApiGenerator
     /**
      * Gets methods and properties from an endpoint
      *
-     * @param array $endpoint Endpoint
+     * @param  array    $endpoint Endpoint
      * @return ApiClass
      */
     public function getInformationfromEndpoint($endpoint)
@@ -354,7 +350,6 @@ class ApiGenerator
         $apiClass->setClassName($this->apiName);
         $apiClass->setNamespace($this->namespace);
 
-
         return $apiClass;
 
     }
@@ -366,7 +361,7 @@ class ApiGenerator
     /**
      * Gets skeleton class for an specific endpoint
      *
-     * @param array $endpoint
+     * @param  array  $endpoint
      * @return string
      */
     public function generateClassForEndpoint($endpoint)
@@ -386,10 +381,10 @@ class ApiGenerator
     /**
      * Writes to a file
      *
-     * @param string  $path     File Path
-     * @param boolean $override Override if exists
+     * @param  string    $path     File Path
+     * @param  boolean   $override Override if exists
      * @throws Exception
-     * @return mixed string or false
+     * @return mixed     string or false
      */
     public function write($path, $override = false)
     {
@@ -413,7 +408,6 @@ class ApiGenerator
             throw new \Exception("Could not write file in $path, verify you have writing permission");
         }
         // @codeCoverageIgnoreEnd
-
         return $filePath;
 
     }

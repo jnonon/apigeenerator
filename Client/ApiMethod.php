@@ -61,7 +61,6 @@ class ApiMethod
 
         $this->setParameters($parameters);
 
-
     }
 
     private function setDescription(array $methodDetail)
@@ -134,7 +133,5 @@ class ApiMethod
     {
         return $this->parameters;
     }
-
-
 
 }

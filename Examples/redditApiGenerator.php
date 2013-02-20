@@ -16,4 +16,3 @@ $endpoints = $apigee->getEndpoints();
 //$apigee->generateClassForEndpoint($endpoints[0])->write('/desirable/path', true);
 
 echo $apigee->generateClassForEndpoint($endpoints[0])->toString();
-
