@@ -52,7 +52,7 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
 
 
-        $apiInfo = $apigee->getInformationfromEndpoint($this->endpoint);
+        $apigee->getInformationfromEndpoint($this->endpoint);
         $parameterImportance = $apigee->getParametersImportance();
 
         $method = $apigee->getMethod(ApiGenerator::stringToCamel('not-important-method'));
@@ -76,8 +76,6 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
     public function testWriteBeforeGenerates()
     {
 
-        $url = 'https://apigee.com/v1/consoles/IdoNotExist/apidescription?format=internal';
-
         $apigee = new ApiGenerator('DoNotExistsAPI');
 
         $apigee->write('.');
@@ -100,6 +98,9 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
         $apigee->setApigeeSourceUrl($url);
 
         $endpoints = $apigee->getEndpoints();
+
+        //Will never get here
+        unset($endpoints);
 
     }
 
@@ -139,7 +140,7 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
     {
 
         $apigee = new ApiGenerator('DoNotExistsAPI');
-        $apiInfo = $apigee->getInformationfromEndpoint(array('resources' => array()));
+        $apigee->getInformationfromEndpoint(array('resources' => array()));
 
     }
 
@@ -175,8 +176,6 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetApiDescription()
     {
-        //$url = 'https://apigee.com/v1/consoles/reddit/apidescription?format=internal';
-
         $url = 'https://apigee.com/v1/consoles/morbo/apidescription?format=internal';
 
         $apigee = new ApiGenerator('RedditApi');
