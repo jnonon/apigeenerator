@@ -140,7 +140,9 @@ class ApiGenerator
 
         } catch (\Exception $error) {
 
-            throw new \Exception('Invalid Json Object');
+            throw new \Exception('An error occurred while puling data from ' .
+                                 $this->apigeeSourceUrl.'. Original error: ' .
+                                 $error->getMessage());
         }
     }
 
