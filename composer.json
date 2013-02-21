@@ -1,14 +1,14 @@
 {
-    "name": "jnonon/apigee",
+    "name": "jnonon/apigeenerator",
     "type": "application",
     "description": "Apigee skeleton class generator",
     "keywords": ["Tools", "Api"],
-    "homepage": "https://github.com/jnonon/apigee",
+    "homepage": "https://github.com/jnonon/apigeenerator",
     "license": "MIT",
     "authors": [
         {
             "name": "Jonathan Nonon",
-            "email": "jnonon@commonratio.com"
+            "email": "jnonon@gmail.com"
         }
     ],
     "require": {
@@ -17,8 +17,8 @@
         "twig/twig": "1.*"
     },
     "autoload": {
-        "psr-0": { "Jnonon\\Tools\\Apigee": "" }
+        "psr-0": { "Jnonon\\Tools\\ApiGeenerator": "" }
     },
-    "target-dir": "Jnonon/Tools/Apigee",
+    "target-dir": "Jnonon/Tools/ApiGeenerator",
     "minimum-stability": "dev"
 }

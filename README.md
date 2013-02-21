@@ -33,9 +33,9 @@ You can find out more on how to install Composer, configure autoloading, and oth
 ## Usage Example
         include_once __DIR__.'/../vendor/autoload.php';
         
-        use Jnonon\Tools\Apigee\Client\ApiGenerator;
+        use Jnonon\Tools\ApiGeenerator\Client\ApiGeenerator;
         
-        $apigee = new ApiGenerator('reddit', 'ReditApi');
+        $apigee = new ApiGeenerator('reddit', 'ReditApi');
         
         $apigee->setApigeeSourceUrl($url);
         
@@ -46,6 +46,6 @@ You can find out more on how to install Composer, configure autoloading, and oth
         
         echo $apigee->generateClassForEndpoint($endpoints[0])->toString();
         
-        //php Examples/redditApiGenerator.php
+        //php Examples/redditApiGeenerator.php
 
         

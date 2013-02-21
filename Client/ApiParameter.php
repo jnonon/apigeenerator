@@ -6,7 +6,7 @@
  * @author Jonathan Nonon <jnonon@gmail.com>
  *
  **/
-namespace Jnonon\Tools\Apigee\Client;
+namespace Jnonon\Tools\ApiGeenerator\Client;
 /**
  * Defines a parameter
  *
@@ -45,7 +45,7 @@ class ApiParameter
      */
     public function __construct(array $parameter, array $options = array())
     {
-        $this->name = ApiGenerator::stringToCamel($parameter['name'], false);
+        $this->name = ApiGeenerator::stringToCamel($parameter['name'], false);
         $this->type = $parameter['type'];
         $this->description = (isset($parameter['doc']['content']) ? $parameter['doc']['content'] : ucfirst($this->name));
     }

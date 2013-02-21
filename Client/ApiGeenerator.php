@@ -7,7 +7,7 @@
 * @author Jonathan Nonon <jnonon@gmail.com>
 *
 **/
-namespace Jnonon\Tools\Apigee\Client;
+namespace Jnonon\Tools\ApiGeenerator\Client;
 
 use Twig_Loader_Filesystem;
 
@@ -15,7 +15,7 @@ use Twig_Loader_Filesystem;
  * Generates Skeleton PHP Apis from ApiGee
  *
 */
-class ApiGenerator
+class ApiGeenerator
 {
     /**
      * Api description url, can be overwritten with setAapigeeSourceUrl

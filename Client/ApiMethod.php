@@ -6,9 +6,9 @@
  * @author Jonathan Nonon <jnonon@gmail.com>
  *
  **/
-namespace Jnonon\Tools\Apigee\Client;
+namespace Jnonon\Tools\ApiGeenerator\Client;
 
-use Jnonon\Tools\Apigee\Client\ApiParameter;
+use Jnonon\Tools\ApiGeenerator\Client\ApiParameter;
 /**
  * Defines a method
  *
@@ -50,7 +50,7 @@ class ApiMethod
     public function __construct(array $methodDetail)
     {
 
-        $this->name = ApiGenerator::stringToCamel($methodDetail['id']);
+        $this->name = ApiGeenerator::stringToCamel($methodDetail['id']);
 
         $this->setDescription($methodDetail);
 

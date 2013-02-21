@@ -2,9 +2,9 @@
 
 include_once __DIR__.'/../vendor/autoload.php';
 
-use Jnonon\Tools\Apigee\Client\ApiGenerator;
+use Jnonon\Tools\ApiGeenerator\Client\ApiGeenerator;
 
-$apigee = new ApiGenerator('reddit', 'RedditApi');
+$apigee = new ApiGeenerator('reddit', 'RedditApi');
 $endpoints = $apigee->getEndpoints();
 
 //Write to a path, overriding if exists

@@ -1,10 +1,10 @@
 <?php
 
-namespace Jnonon\Tools\Apigee\Test;
+namespace Jnonon\Tools\ApiGeenerator\Test;
 
-use Jnonon\Tools\Apigee\Client\ApiGenerator;
+use Jnonon\Tools\ApiGeenerator\Client\ApiGeenerator;
 
-class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
+class ApiGeeneratorTest extends \PHPUnit_Framework_TestCase
 {
     protected $apiName = 'TraktApi';
 
@@ -46,7 +46,7 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
     public function testPropertyImportance()
     {
 
-        $apigee = new ApiGenerator($this->providerApi, $this->apiName);
+        $apigee = new ApiGeenerator($this->providerApi, $this->apiName);
 
         $this->assertEquals($apigee->getApiName(), $this->apiName);
 
@@ -55,9 +55,9 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
         $apigee->getInformationfromEndpoint($this->endpoint);
         $parameterImportance = $apigee->getParametersImportance();
 
-        $method = $apigee->getMethod(ApiGenerator::stringToCamel('not-important-method'));
+        $method = $apigee->getMethod(ApiGeenerator::stringToCamel('not-important-method'));
 
-        $this->assertInstanceOf('Jnonon\\Tools\\Apigee\\Client\\ApiMethod', $method);
+        $this->assertInstanceOf('Jnonon\\Tools\\ApiGeenerator\\Client\\ApiMethod', $method);
 
         $this->assertTrue(count($parameterImportance) == 3);
 
@@ -76,7 +76,7 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
     public function testWriteBeforeGenerates()
     {
 
-        $apigee = new ApiGenerator('DoNotExistsAPI');
+        $apigee = new ApiGeenerator('DoNotExistsAPI');
 
         $apigee->write('.');
 
@@ -89,7 +89,7 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
     public function testToStringBeforeGenerates()
     {
 
-        $apigee = new ApiGenerator('DoNotExistsAPI');
+        $apigee = new ApiGeenerator('DoNotExistsAPI');
 
         $apigee->toString('.');
 
@@ -104,7 +104,7 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
         $url = 'https://apigee.com/v1/consoles/IdoNotExist/apidescription?format=internal';
 
-        $apigee = new ApiGenerator('DoNotExistsAPI');
+        $apigee = new ApiGeenerator('DoNotExistsAPI');
 
         $apigee->setApigeeSourceUrl($url);
 
@@ -119,7 +119,7 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
     public function testOveridingExistingFile()
     {
 
-        $apigee = new ApiGenerator('DoNotExistsAPI');
+        $apigee = new ApiGeenerator('DoNotExistsAPI');
 
         $apigee->generateClassForEndpoint($this->endpoint)->write(sys_get_temp_dir(), true);
         $apigee->generateClassForEndpoint($this->endpoint)->write(sys_get_temp_dir(), false);
@@ -133,7 +133,7 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
     public function testWritingToNonWritablePath()
     {
 
-        $apigee = new ApiGenerator('DoNotExistsAPI');
+        $apigee = new ApiGeenerator('DoNotExistsAPI');
 
         $apigee->generateClassForEndpoint($this->endpoint)->write('/home', false);
 
@@ -146,7 +146,7 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
     public function testEndpointWithoutBaseurl()
     {
 
-        $apigee = new ApiGenerator('DoNotExistsAPI');
+        $apigee = new ApiGeenerator('DoNotExistsAPI');
         $apigee->getInformationfromEndpoint(array('resources' => array()));
 
     }
@@ -160,7 +160,7 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
         $baseUrl = 'http:\\\\base.url.com';
         $namespace = "This\Is\A\NameSpace";
 
-        $apigee = new ApiGenerator($className);
+        $apigee = new ApiGeenerator($className);
         $apigee->setNamespace($namespace);
 
         $apiInfo = $apigee->getInformationfromEndpoint(array('resources' => array(), 'base' => $baseUrl));
@@ -181,7 +181,7 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testClassIsGeneratedCorrectly()
     {
-        $apigee = new ApiGenerator('reddit', 'RedditAwesomeApi');
+        $apigee = new ApiGeenerator('reddit', 'RedditAwesomeApi');
 
         $endpoints = $apigee->getEndpoints();
 

@@ -6,7 +6,7 @@
  * @author Jonathan Nonon <jnonon@gmail.com>
  *
  **/
-namespace Jnonon\Tools\Apigee\Client;
+namespace Jnonon\Tools\ApiGeenerator\Client;
 /**
  * Defines a Class
  *
