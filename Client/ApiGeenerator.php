@@ -317,11 +317,11 @@ class ApiGeenerator
     {
         $k = 0.001;
 
-        $variableTotalAperance = isset($this->parametersImportance[$paramName]) ? $this->parametersImportance[$paramName] : 0;
+        $variableTotalApperance = isset($this->parametersImportance[$paramName]) ? $this->parametersImportance[$paramName] : 0;
         $totalVariableCases = count($this->parametersImportance); //This count may be catched
         $totalAmountOfMethods = $this->totalMethods;
 
-        return ($variableTotalAperance +$k)/($totalAmountOfMethods + $k*$totalVariableCases);
+        return ($variableTotalApperance +$k)/($totalAmountOfMethods + $k*$totalVariableCases);
 
     }
     /**
