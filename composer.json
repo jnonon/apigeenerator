@@ -17,6 +17,7 @@
         "twig/twig": "1.*"
     },
     "autoload": {
+    
         "psr-0": { "Jnonon\\Tools\\ApiGeenerator": "" }
     },
     "target-dir": "Jnonon/Tools/ApiGeenerator",
