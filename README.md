@@ -38,6 +38,8 @@ TODO
     require 'vendor/autoload.php';
 
 ## Usage Example
+```php
+    <?php
     /* redditApiGeenerator.php */
     require __DIR__.'/vendor/autoload.php';
     
@@ -56,5 +58,7 @@ TODO
     
     //See results
     //php redditApiGeenerator.php
+```
+Sample Output in [Example\RedditApi.php](https://github.com/jnonon/apigeenerator/blob/master/Examples/RedditApi.php)
 
     
