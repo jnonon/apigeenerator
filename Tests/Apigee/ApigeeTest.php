@@ -8,6 +8,8 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 {
     protected $apiName = 'TraktApi';
 
+    protected $providerApi = 'morbo';
+
     protected $endpoint = array('resources' =>
                        array(
                            array('method' =>
@@ -44,7 +46,7 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
     public function testPropertyImportance()
     {
 
-        $apigee = new ApiGenerator($this->apiName);
+        $apigee = new ApiGenerator($this->providerApi, $this->apiName);
 
         $this->assertEquals($apigee->getApiName(), $this->apiName);
 
@@ -175,15 +177,11 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests for description of an API
+     * Tests if the class have been generated correctly
      */
-    public function testGetApiDescription()
+    public function testClassIsGeneratedCorrectly()
     {
-        $url = 'https://apigee.com/v1/consoles/morbo/apidescription?format=internal';
-
-        $apigee = new ApiGenerator('RedditApi');
-
-        $apigee->setApigeeSourceUrl($url);
+        $apigee = new ApiGenerator('reddit', 'RedditAwesomeApi');
 
         $endpoints = $apigee->getEndpoints();
 
@@ -194,6 +192,15 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 
         //Test that an string can be returned
         $this->assertTrue(is_string($apigee->toString()));
+
+        //Test that the generated file is correct
+        $commandReturnValue = null;
+        $output = array();
+
+        //Test syntax errors, may be moved to another method
+        exec('php -l '.$path, $output, $commandReturnValue);
+
+        $this->assertEquals($commandReturnValue, 0);
 
     }
 
