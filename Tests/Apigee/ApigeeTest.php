@@ -8,6 +8,8 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
 {
     protected $apiName = 'TraktApi';
 
+    protected $providerApi = 'morbo';
+
     protected $endpoint = array('resources' =>
                        array(
                            array('method' =>
@@ -44,7 +46,7 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
     public function testPropertyImportance()
     {
 
-        $apigee = new ApiGenerator($this->apiName);
+        $apigee = new ApiGenerator($this->providerApi, $this->apiName);
 
         $this->assertEquals($apigee->getApiName(), $this->apiName);
 
@@ -181,9 +183,10 @@ class OpenCalaisApiClientTest extends \PHPUnit_Framework_TestCase
     {
         $url = 'https://apigee.com/v1/consoles/morbo/apidescription?format=internal';
 
-        $apigee = new ApiGenerator('RedditApi');
 
-        $apigee->setApigeeSourceUrl($url);
+        $apigee = new ApiGenerator('Reddit');
+
+        //$apigee->setApigeeSourceUrl($url);
 
         $endpoints = $apigee->getEndpoints();
 

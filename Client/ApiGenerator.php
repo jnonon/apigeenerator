@@ -18,11 +18,11 @@ use Twig_Loader_Filesystem;
 class ApiGenerator
 {
     /**
-     * Api description url
+     * Api description url, can be overwritten with setAapigeeSourceUrl
      *
      * @var string
      */
-    protected $apigeeSourceUrl;
+    protected $apigeeSourceUrl = "https://apigee.com/v1/consoles/[apiProvider]/apidescription?format=internal";
 
     /**
      * Desirable api name to use
@@ -88,12 +88,25 @@ class ApiGenerator
 
     /**
      * Constructor
+     * Initialize the url of an specific API, where the api description is
      *
-     * @param string $apiName Api name
+     * @param string $apiProvider Provider name. For example, twitter, facebook
+     * @param string $apiName     Overrides the default ApiName
+     *
      */
-    public function __construct($apiName)
+    public function __construct($apiProvider, $apiName = '')
     {
+        //Makes the class name a CamelCase version of the api provider
+        if ($apiName == '') {
+            $apiName =  self::stringToCamel($apiProvider);
+
+        }
+
+        $apiProvider = strtolower($apiProvider);
+
         $this->apiName = $apiName;
+        $this->apigeeSourceUrl = str_replace('[apiProvider]', $apiProvider, $this->apigeeSourceUrl);
+
     }
     /**
      * Sets the url where the target Api description lives

@@ -1,12 +1,7 @@
 Apigee Skeleton class generator
 ================================================
-The [Apigee](http://apigee.com/about/) API platform provides services to help you create, grow and maintain your API program. Whether you are just starting to plan your enterprise API or scaling to support millions of customers, Apigee adds critical capabilities you need, including:
+This tool generates Stub classes base on existing definitions in [Apigee](http://apigee.com/about/), for example [tumblr console](https://apigee.com/console/tumblr)
 
-A flexible policy model to transform your existing APIs to create business agility
-End-to-end operational and business analytics for the API team, developers, and operations
-A developer portal to attract and empower developers
-
-This tool generates Stub classes base on existing definitions in Apigee website for existing Api 
 
 ### Installing via Composer
 0. Clone this repository:
@@ -33,12 +28,7 @@ You can find out more on how to install Composer, configure autoloading, and oth
         
         use Jnonon\Tools\Apigee\Client\ApiGenerator;
         
-        $url = 'https://apigee.com/v1/consoles/reddit/apidescription?format=internal';
-        
-        $apigee = new ApiGenerator('RedditApi');
-        
-        $apigee->setApigeeSourceUrl($url);
-        
+        $apigee = new ApiGenerator('reddit', 'ReditApi');
         $endpoints = $apigee->getEndpoints();
         
         //Write to a path, overriding if exists
