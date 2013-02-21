@@ -18,6 +18,7 @@ TODO
 1. Requires [composer](getcomposer.org)
 
 2. In your `composer.json` add the following lines:
+
         "repositories": [
             {
                 "type": "vcs",
@@ -32,13 +33,9 @@ TODO
 
         php composer.phar install
 
-4. Require Composer's autoloader
-
-    Composer also prepares an autoload file that's capable of autoloading all of the classes in any of the libraries that it downloads. To use it, just add the following line to your code's bootstrap process:
+4. Require Composer's autoloader. Composer also prepares an autoload file that's capable of autoloading all of the classes in any of the libraries that it downloads. To use it, just add the following line to your code's bootstrap process:
 
         require 'vendor/autoload.php';
-
-You can find out more on how to install Composer, configure autoloading, and other best-practices for defining dependencies at [getcomposer.org](http://getcomposer.org).
 
 ## Usage Example
         /* redditApiGeenerator.php */
