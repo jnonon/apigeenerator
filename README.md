@@ -18,15 +18,15 @@ TODO
 1. Requires [composer](getcomposer.org)
 
 2. In your `composer.json` add the following lines:
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/jnonon/apigeenerator"
-        }
-    ],
-    "require": {
-        "jnonon/apigeenerator": "*"
-    },
+        "repositories": [
+            {
+                "type": "vcs",
+                "url": "https://github.com/jnonon/apigeenerator"
+            }
+        ],
+        "require": {
+            "jnonon/apigeenerator": "*"
+        },
 
 3. Install your dependencies:
 
@@ -41,6 +41,7 @@ TODO
 You can find out more on how to install Composer, configure autoloading, and other best-practices for defining dependencies at [getcomposer.org](http://getcomposer.org).
 
 ## Usage Example
+        /* redditApiGeenerator.php */
         require __DIR__.'/vendor/autoload.php';
         
         use Jnonon\Tools\ApiGeenerator\Client\ApiGeenerator;
@@ -52,10 +53,11 @@ You can find out more on how to install Composer, configure autoloading, and oth
         $endpoints = $apigee->getEndpoints();
         
         //Write to a path, overriding if exists
-        //$apigee->generateClassForEndpoint($endpoints[0])->write('/desirable/path', true);
+        //$apigee->generateClassForEndpoint($endpoints[0])->write('/desirable/filesystem/path', true);
         
         echo $apigee->generateClassForEndpoint($endpoints[0])->toString();
         
-        //php Examples/redditApiGeenerator.php
+        //See results
+        //php redditApiGeenerator.php
 
         
