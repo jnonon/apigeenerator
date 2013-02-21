@@ -12,7 +12,7 @@ Features
 
 ### Installing via Composer
 0. Clone this repository:
-        git clone git@github.com:jnonon/apigee.git
+        `git clone git@github.com:jnonon/apigeenerator.git`
 
 1. Download and install Composer:
 
