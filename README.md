@@ -18,9 +18,9 @@ TODO
 1. Requires [composer](getcomposer.org)
 
 2. In your `composer.json` add the following lines:
-
+```json
     "repositories": [
-        {
+       {
         "type": "vcs",
         "url": "https://github.com/jnonon/apigeenerator"
         }
@@ -28,7 +28,7 @@ TODO
     "require": {
         "jnonon/apigeenerator": "*"
     },
-
+```
 3. Install your dependencies:
 
     php composer.phar install
