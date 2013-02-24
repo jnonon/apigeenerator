@@ -53,4 +53,4 @@ TODO
     //See results
     //php redditApiGeenerator.php
 ```
-Sample Output in [Example\RedditApi.php](Example/RedditApi.php)
+Sample Output in [Examples\RedditApi.php](Examples/RedditApi.php)
