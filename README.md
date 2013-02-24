@@ -15,7 +15,7 @@ TODO
 - Support other programming languages templates
 
 ### Installing via Composer
-1. Requires [composer](http:\\getcomposer.org)
+1. Requires [composer](http://getcomposer.org)
 
 2. In your `composer.json` add the following lines:
 ```json
@@ -53,4 +53,4 @@ TODO
     //See results
     //php redditApiGeenerator.php
 ```
-Sample Output in [Example\RedditApi.php](Example\RedditApi.php)
+Sample Output in [Example\RedditApi.php](Example/RedditApi.php)
