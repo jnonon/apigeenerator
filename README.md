@@ -15,16 +15,10 @@ TODO
 - Support other programming languages templates
 
 ### Installing via Composer
-1. Requires [composer](getcomposer.org)
+1. Requires [composer](http:\\getcomposer.org)
 
 2. In your `composer.json` add the following lines:
 ```json
-    "repositories": [
-       {
-        "type": "vcs",
-        "url": "https://github.com/jnonon/apigeenerator"
-        }
-    ],
     "require": {
         "jnonon/apigeenerator": "*"
     },
@@ -59,6 +53,4 @@ TODO
     //See results
     //php redditApiGeenerator.php
 ```
-Sample Output in [Example\RedditApi.php](https://github.com/jnonon/apigeenerator/blob/master/Examples/RedditApi.php)
-
-    
+Sample Output in [Example\RedditApi.php](Example\RedditApi.php)
